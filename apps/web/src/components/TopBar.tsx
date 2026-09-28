@@ -2,8 +2,8 @@ import { NavLink } from "react-router-dom";
 import type { DemoUser } from "../api";
 
 export function TopBar({
-  repoName, users, currentUserId, onChangeUser,
-}: { repoName: string; users: DemoUser[]; currentUserId: string; onChangeUser: (id: string) => void }) {
+  repoName, users, currentUserId, onChangeUser, onLogout,
+}: { repoName: string; users: DemoUser[]; currentUserId: string; onChangeUser: (id: string) => void; onLogout: () => void }) {
   return (
     <header className="topbar">
       <span className="brand">ReviewMind</span>
@@ -20,6 +20,7 @@ export function TopBar({
           <option key={u.id} value={u.id}>{u.name} — {u.role}</option>
         ))}
       </select>
+      <button className="ghost topbar-logout" type="button" onClick={onLogout}>Sign out</button>
     </header>
   );
 }

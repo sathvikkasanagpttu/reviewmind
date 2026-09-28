@@ -66,7 +66,7 @@ npm run dev:web
 
 Then reload <http://localhost:5173>. To check the API on its own, open <http://localhost:8787/api/health> in the browser. It should return {"status":"ok",...}.
 
-Switch role from the top-bar dropdown (viewer / contributor / maintainer).
+On first visit, choose a seeded demo account at the login screen. The selected account is saved in the browser; sign out to return to login. You can switch roles from the top-bar dropdown (viewer / contributor / maintainer).
 
 ## Demo journeys (verified against the running API)
 

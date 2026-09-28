@@ -40,8 +40,14 @@ export interface Decision {
   source_event_ids: string[]; source_timeline?: any[];
 }
 
-let currentUserId = "demo-maintainer";
-export function setCurrentUser(id: string) { currentUserId = id; }
+let currentUserId = typeof window === "undefined" ? "" : window.localStorage.getItem("reviewmind-user") ?? "";
+export function setCurrentUser(id: string) {
+  currentUserId = id;
+  if (typeof window !== "undefined") {
+    if (id) window.localStorage.setItem("reviewmind-user", id);
+    else window.localStorage.removeItem("reviewmind-user");
+  }
+}
 export function getCurrentUser() { return currentUserId; }
 
 async function req(path: string, opts: RequestInit = {}) {
