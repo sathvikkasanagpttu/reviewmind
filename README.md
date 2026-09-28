@@ -38,7 +38,7 @@ cd ~/Downloads/reviewmind
 npm run dev:api
 ```
 
-Wait for listening on http://localhost:8787.
+Wait for listening on <http://localhost:8787>.
 
 Terminal 2:
 
@@ -47,7 +47,7 @@ cd ~/Downloads/reviewmind
 npm run dev:web
 ```
 
-Then reload http://localhost:5173. To check the API on its own, open http://localhost:8787/api/health in the browser. It should return {"status":"ok",...}.
+Then reload <http://localhost:5173>. To check the API on its own, open <http://localhost:8787/api/health> in the browser. It should return {"status":"ok",...}.
 
 Switch role from the top-bar dropdown (viewer / contributor / maintainer).
 
