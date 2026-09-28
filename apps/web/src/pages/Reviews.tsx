@@ -3,8 +3,14 @@ import { api, type PrFixture, type ReviewRun, type Finding } from "../api";
 import { FindingCard } from "../components/FindingCard";
 import { FeedbackDrawer, type FeedbackDraft } from "../components/FeedbackDrawer";
 import { DecisionReviewCard } from "../components/DecisionReviewCard";
+import { DiffViewer } from "../components/DiffViewer";
 
 const MODES = ["memory", "static", "generic"] as const;
+const MODE_DESCRIPTIONS = {
+  memory: "Checks this change against scoped decisions and their limits.",
+  static: "Checks this change against repository rules without memory.",
+  generic: "Reviews this change without repository-specific context.",
+};
 
 export function ReviewsPage({ repoId }: { repoId: string }) {
   const [prFixtures, setPrFixtures] = useState<PrFixture[]>([]);
@@ -74,8 +80,22 @@ export function ReviewsPage({ repoId }: { repoId: string }) {
   }
 
   return (
-    <div className="grid-3">
-      <div className="card">
+    <div className="reviews-page">
+      <section className="review-hero" aria-labelledby="review-hero-title">
+        <div className="review-hero-copy">
+          <p className="hero-eyebrow"><span className="hero-signal" /> Engineering decision memory</p>
+          <h1 id="review-hero-title">Review with context.</h1>
+          <p className="hero-description">Keep good exceptions useful, scoped, and accountable as code evolves.</p>
+        </div>
+        <div className="hero-identity" aria-label="ReviewMind synthetic demo workspace">
+          <span className="hero-mark" aria-hidden="true">RM</span>
+          <span><strong>ReviewMind</strong><small>Synthetic workspace</small></span>
+        </div>
+        <div className="hero-index" aria-hidden="true">01 <span /> 03</div>
+      </section>
+
+      <div className="grid-3">
+      <div className="card review-rail">
         <p className="section-title">Seed PRs</p>
         {prFixtures.map((pr) => (
           <div key={pr.id} className={`pr-item ${selectedPr?.id === pr.id ? "active" : ""}`} onClick={() => selectPr(pr)}>
@@ -86,33 +106,38 @@ export function ReviewsPage({ repoId }: { repoId: string }) {
         {prFixtures.length === 0 && <p className="empty-state">No seed data yet — start the API.</p>}
       </div>
 
-      <div className="card">
+      <div className="card review-editor">
         <div className="tabs">
           {MODES.map((m) => (
             <button key={m} className={mode === m ? "active" : ""} onClick={() => setMode(m)}>{m}</button>
           ))}
         </div>
+        <p className="mode-description">{MODE_DESCRIPTIONS[mode]}</p>
         <label className="label">Title</label>
         <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="PR title" />
-        <label className="label" style={{ marginTop: 10 }}>Diff (pasted unified diff)</label>
-        <textarea className="diff" value={diff} onChange={(e) => setDiff(e.target.value)} placeholder="--- a/file\n+++ b/file\n..." />
-        <div style={{ display: "flex", gap: 10, marginTop: 10 }}>
-          <div style={{ flex: 1 }}>
+        <label className="label diff-section-label">Diff preview</label>
+        <DiffViewer diff={diff} />
+        <div className="diff-editor">
+          <label className="label" htmlFor="diff-source">Edit unified diff</label>
+          <textarea id="diff-source" className="diff" value={diff} onChange={(e) => setDiff(e.target.value)} placeholder="--- a/file\n+++ b/file\n..." />
+        </div>
+        <div className="review-context-fields">
+          <div className="review-field">
             <label className="label">Dependency versions (JSON)</label>
             <input value={depVersions} onChange={(e) => setDepVersions(e.target.value)} />
           </div>
-          <div style={{ flex: 1 }}>
+          <div className="review-field">
             <label className="label">Demo time (ISO, optional)</label>
             <input value={demoTime} onChange={(e) => setDemoTime(e.target.value)} placeholder="2026-09-29T12:00:00Z" />
           </div>
         </div>
-        <div style={{ marginTop: 12 }}>
+        <div className="review-submit">
           <button disabled={loading || !diff} onClick={runReview}>{loading ? "Reviewing…" : "Review change"}</button>
         </div>
-        {error && <p style={{ color: "var(--danger)", fontSize: 13, marginTop: 8 }}>{error}</p>}
+        {error && <p className="review-error" role="alert">{error}</p>}
       </div>
 
-      <div className="card">
+      <div className="card review-findings">
         <p className="section-title">Findings + memory</p>
         {!run && <p className="empty-state">No findings within supplied context yet — run a review.</p>}
         {run?.output && (
@@ -134,6 +159,7 @@ export function ReviewsPage({ repoId }: { repoId: string }) {
           <FeedbackDrawer finding={activeFeedbackFinding} onCancel={() => setActiveFeedbackFinding(null)} onSave={saveFeedback} />
         )}
         {draftDecisionId && <DecisionReviewCard decisionId={draftDecisionId} onApproved={() => setDraftDecisionId(null)} />}
+      </div>
       </div>
     </div>
   );
