@@ -6,6 +6,23 @@ Remember why an exception was approved. Apply it only where it belongs. Flag it 
 HackwithHyderabad 3.0 · 48-hour prototype · implementation of *ReviewMind Implementation PRD v1.0*.
 All data (repo `democart-integrations`, dependency `bridge-client`, decisions, dates) is **SYNTHETIC**.
 
+## Project overview
+
+ReviewMind is a professional TypeScript monorepo built around a practical engineering decision memory loop: review a pull request, capture a scoped decision, persist the rationale, and re-check the same rule on future reviews when the context changes.
+
+The project is structured as a full demo-ready application with:
+
+- `apps/api` — Express + TypeScript review API, decision approval/revocation, in-memory ledger, evaluation endpoints, and demo bootstrap flow
+- `apps/web` — React + Vite + TypeScript interface for reviews, decisions, and evaluation views
+- `packages/contracts` — shared Zod schemas and typed API contracts
+- `packages/decision-engine` — deterministic matching for path globs, dependency/version rules, expiry conditions, supersession, and conflict handling
+- `packages/memory` — hedged memory adapters with an in-memory Hindsight simulation and integration boundary for cloud-backed retention
+- `packages/reviewer` — rule-based reviewer plus optional LLM-backed provider integration
+- `fixtures` — synthetic repository state, PR scenarios, and evaluation cases
+- `supabase/migrations` — schema foundation for the ledger, permissions, and RLS-ready data model
+
+This implementation follows the PRD’s core architecture: a React frontend, Node/TypeScript API, deterministic decision engine, memory layer, reviewer provider, and a Supabase-ready persistence model.
+
 ## What is real vs. stubbed (read this first)
 
 | Piece | State in this repo |
