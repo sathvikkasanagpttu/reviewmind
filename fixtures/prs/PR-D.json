@@ -1,0 +1,8 @@
+{
+  "id": "PR-D",
+  "title": "PR-D: legacy status adapter, active exception, timeout removed",
+  "diff": "--- a/src/adapters/legacy/status.ts\n+++ b/src/adapters/legacy/status.ts\n@@ -4,9 +4,8 @@\n  * incompatibility; see decision 014 for the scoped exception (standard transport wrapper).\n  */\n export async function getLegacyStatus(baseUrl: string): Promise<{ ok: boolean }> {\n-  const res = await request(`${baseUrl}/legacy/status`, {\n-    timeout: 2000,\n-  });\n+  const res = await request(`${baseUrl}/legacy/status`, {});\n   return { ok: res.ok };\n }\n",
+  "dependency_versions": { "bridge-client": "1.8.0" },
+  "demo_time": "2026-09-29T12:00:00Z",
+  "expected_principle": "Exception cannot waive the timeout baseline"
+}

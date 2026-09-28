@@ -1,0 +1,22 @@
+{
+  "name": "reviewmind",
+  "private": true,
+  "version": "1.0.0",
+  "description": "ReviewMind - a code reviewer with memory for decisions and their limits. HackwithHyderabad 3.0 prototype.",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:api": "npm run dev -w apps/api",
+    "dev:web": "npm run dev -w apps/web",
+    "build": "npm run build -w packages/contracts && npm run build -w packages/decision-engine && npm run build -w packages/memory && npm run build -w packages/reviewer && npm run build -w apps/api && npm run build -w apps/web",
+    "seed": "npm run seed -w apps/api"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.4"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

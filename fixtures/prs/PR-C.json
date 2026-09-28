@@ -1,0 +1,8 @@
+{
+  "id": "PR-C",
+  "title": "PR-C: legacy status adapter, same version, after expiry",
+  "diff": "--- a/src/adapters/legacy/status.ts\n+++ b/src/adapters/legacy/status.ts\n@@ -1,10 +1,12 @@\n /**\n  * Legacy status adapter for bridge-client 1.8.0.\n+ * Bypasses the standard transport wrapper due to a known tracing-header\n+ * incompatibility; see decision 014 for the scoped exception.\n  */\n export async function getLegacyStatus(baseUrl: string): Promise<{ ok: boolean }> {\n   const res = await request(`${baseUrl}/legacy/status`, {\n     timeout: 2000,\n   });\n   return { ok: res.ok };\n }\n",
+  "dependency_versions": { "bridge-client": "1.8.0" },
+  "demo_time": "2026-10-01T00:00:00Z",
+  "expected_principle": "Exception has expired"
+}

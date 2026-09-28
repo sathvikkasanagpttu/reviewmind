@@ -1,0 +1,17 @@
+{
+  "name": "@reviewmind/decision-engine",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": { "build": "tsc -p tsconfig.json", "test": "node --test test/engine.test.js" },
+  "dependencies": {
+    "@reviewmind/contracts": "1.0.0",
+    "micromatch": "^4.0.8",
+    "semver": "^7.6.3"
+  },
+  "devDependencies": {
+    "@types/micromatch": "^4.0.9",
+    "@types/semver": "^7.5.8",
+    "typescript": "^5.5.4"
+  }
+}

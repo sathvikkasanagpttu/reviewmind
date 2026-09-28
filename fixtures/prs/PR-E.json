@@ -1,0 +1,8 @@
+{
+  "id": "PR-E",
+  "title": "PR-E: legacy status adapter, dependency version missing",
+  "diff": "--- a/src/adapters/legacy/status.ts\n+++ b/src/adapters/legacy/status.ts\n@@ -1,10 +1,12 @@\n /**\n  * Legacy status adapter.\n+ * Bypasses the standard transport wrapper; scope believed similar to\n+ * decision 014 but dependency version was not included in this diff.\n  */\n export async function getLegacyStatus(baseUrl: string): Promise<{ ok: boolean }> {\n   const res = await request(`${baseUrl}/legacy/status`, {\n     timeout: 2000,\n   });\n   return { ok: res.ok };\n }\n",
+  "dependency_versions": {},
+  "demo_time": "2026-09-29T12:00:00Z",
+  "expected_principle": "Ask for version; do not assume eligibility"
+}

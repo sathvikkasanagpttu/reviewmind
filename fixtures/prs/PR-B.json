@@ -1,0 +1,8 @@
+{
+  "id": "PR-B",
+  "title": "PR-B: new status adapter, same dependency version, unrelated path",
+  "diff": "--- a/src/adapters/new/status.ts\n+++ b/src/adapters/new/status.ts\n@@ -1,8 +1,11 @@\n import { wrappedRequest } from \"../../lib/transport\";\n \n+// Bypassing the standard transport wrapper here as well, reusing the same\n+// request helper style as the legacy path.\n export async function getNewStatus(baseUrl: string): Promise<{ ok: boolean }> {\n   const res = await request(`${baseUrl}/status`, { timeout: 2000 });\n   return { ok: res.ok };\n }\n",
+  "dependency_versions": { "bridge-client": "1.8.0" },
+  "demo_time": "2026-09-29T12:00:00Z",
+  "expected_principle": "Exception does not transfer to another path"
+}

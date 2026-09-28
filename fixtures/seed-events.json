@@ -1,0 +1,78 @@
+[
+  {
+    "type": "repository_convention",
+    "actor_role": "maintainer",
+    "occurred_at": "2026-06-01T09:00:00Z",
+    "rule_key": "transport-wrapper",
+    "content": "Convention: all outgoing adapter requests must go through the standard transport wrapper (src/lib/transport.ts) for consistent instrumentation, retries and tracing.",
+    "scope": { "path_glob": "src/adapters/**" }
+  },
+  {
+    "type": "helper_explanation",
+    "actor_role": "contributor",
+    "occurred_at": "2026-06-02T10:00:00Z",
+    "rule_key": "transport-wrapper",
+    "content": "wrappedRequest() in src/lib/transport.ts adds an AbortController-based timeout, retry-on-5xx, and request tracing headers."
+  },
+  {
+    "type": "compatibility_evidence",
+    "actor_role": "contributor",
+    "occurred_at": "2026-09-15T14:30:00Z",
+    "rule_key": "transport-wrapper",
+    "content": "bridge-client 1.8.0's legacy status endpoint returns 400 when the wrapper's tracing header is present; confirmed against the vendor's staging sandbox.",
+    "source": "fixture-compatibility-note-2026-09-15"
+  },
+  {
+    "type": "decision_approved",
+    "actor_role": "maintainer",
+    "occurred_at": "2026-09-16T09:00:00Z",
+    "rule_key": "transport-wrapper",
+    "kind": "temporary_exception",
+    "rationale": "bridge-client 1.8.0 legacy status endpoint is incompatible with the wrapper's tracing header (fixture compatibility note, 2026-09-15). Direct request retained, explicit 2s timeout still required.",
+    "scope": { "path_glob": "src/adapters/legacy/**", "dependency_name": "bridge-client", "version_range": ">=1.8.0 <2.0.0" },
+    "effective_from": "2026-09-16T00:00:00Z",
+    "expires_at": "2026-09-30T00:00:00Z",
+    "decision_ref": "014"
+  },
+  {
+    "type": "feedback_on_incorrect_suggestion",
+    "actor_role": "contributor",
+    "occurred_at": "2026-09-17T11:00:00Z",
+    "rule_key": "transport-wrapper",
+    "content": "Reviewer suggested wrapping a health-check-only call that never leaves localhost; correctly marked already_handled, no exception needed."
+  },
+  {
+    "type": "unrelated_path_decision",
+    "actor_role": "maintainer",
+    "occurred_at": "2026-07-10T09:00:00Z",
+    "rule_key": "log-format",
+    "kind": "convention",
+    "rationale": "All adapters must emit structured JSON logs, not printf-style strings.",
+    "scope": { "path_glob": "src/adapters/**" },
+    "effective_from": "2026-07-10T00:00:00Z",
+    "expires_at": null
+  },
+  {
+    "type": "decision_superseded_example",
+    "actor_role": "maintainer",
+    "occurred_at": "2026-05-01T09:00:00Z",
+    "rule_key": "retry-policy",
+    "kind": "convention",
+    "rationale": "Superseded convention kept for history: earlier retry policy allowed unlimited retries.",
+    "scope": { "path_glob": "src/adapters/**" },
+    "effective_from": "2026-05-01T00:00:00Z",
+    "expires_at": null,
+    "status_note": "superseded on 2026-08-01 by a bounded-retry convention"
+  },
+  {
+    "type": "decision_supersedes_example",
+    "actor_role": "maintainer",
+    "occurred_at": "2026-08-01T09:00:00Z",
+    "rule_key": "retry-policy",
+    "kind": "convention",
+    "rationale": "Bound adapter retries to a maximum of 1 to avoid amplifying upstream outages.",
+    "scope": { "path_glob": "src/adapters/**" },
+    "effective_from": "2026-08-01T00:00:00Z",
+    "expires_at": null
+  }
+]

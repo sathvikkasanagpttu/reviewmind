@@ -1,0 +1,13 @@
+{
+  "name": "@reviewmind/reviewer",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": { "build": "tsc -p tsconfig.json" },
+  "dependencies": {
+    "@reviewmind/contracts": "1.0.0",
+    "@reviewmind/decision-engine": "1.0.0",
+    "@reviewmind/memory": "1.0.0"
+  },
+  "devDependencies": { "typescript": "^5.5.4", "@types/node": "^20.14.0" }
+}
